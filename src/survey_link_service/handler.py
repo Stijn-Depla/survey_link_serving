@@ -27,12 +27,12 @@ def call(event, context):
         t_result = pipeline_serve_link()
         print("Status_code returned by pipeline_serve_link: " + str(t_result[0]))
         print("Message returned by pipeline_serve_link: " + t_result[1])
-        print("Link returned by pipeline_serve_link: " + str(t_result[2]))
+        print("Link returned by pipeline_serve_link: " + t_result[2])
         if t_result[2] is not None:
             return {
                 "statusCode": t_result[0],
                 "headers": {
-                    "link": str(t_result[2]),
+                    "link": t_result[2],
                     "Access-Control-Allow-Methods": "Get",
                     "Access-Control-Allow-Origin": "https://uitkomstgerichtegeboortezorg.nl"
                 },
