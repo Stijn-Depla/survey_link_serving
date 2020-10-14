@@ -1,0 +1,48 @@
+service: ServeSurveyLink
+frameworkVersion: '>=1.71 <1.72'
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: eu-central-1
+  stage: dev
+  deploymentBucket:
+    name: recipes.stijn.depla.deployments.1281317153023527
+    blockPublicAcces: true
+    maxPreviousDeploymentArtifacts: 10
+    serverSideEncryption: AES256
+  deploymentPrefix: serve.survey.link
+  tags:
+    app: 'survey_alies'
+    service: ${self:service}
+    stage: ${self:custom.myStage}
+    author: 'S.Depla'
+
+package:
+  exclude:
+  - .env
+
+functions:
+  ServeSurveyLink:
+    handler: handler.call
+    timeout: 29
+    memorySize: 128
+    environment:
+      CLIENT_ID: ${env:CLIENT_ID}
+      CLIENT_SECRET: ${env:CLIENT_SECRET}
+      STUDY_ID: ${env:STUDY_ID}
+      INSTITUTE_ID: ${env:INSTITUTE_ID}
+      SURVEY_PACKAGE_ID: ${env:SURVEY_PACKAGE_ID}
+    events:
+      - http:
+          path: /
+          method: get
+    layers:
+      - arn:aws:lambda:eu-central-1:611763741463:layer:sls-layer-survey-link-serving-${self:custom.myStage}-Python37:latest
+
+plugins:
+  - serverless-deployment-bucket
+  - serverless-latest-layer-version
+
+custom:
+  myStage: ${opt:stage, self:provider.stage}
