@@ -1,0 +1,39 @@
+service: sls-layer-survey-link-serving
+frameworkVersion: '>=1.71 <1.72'
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: eu-central-1
+  stage: dev
+  deploymentBucket:
+    name: recipes.stijn.depla.deployments.1281317153023527
+    blockPublicAcces: true
+    maxPreviousDeploymentArtifacts: 10
+    serverSideEncryption: AES256
+  deploymentPrefix: layer.survey.link.serving
+  tags:
+    app: 'survey_alies'
+    service: ${self:service}
+    stage: ${self:custom.myStage}
+    author: 'S.Depla'
+
+plugins:
+  - serverless-python-requirements
+  - serverless-deployment-bucket
+
+custom:
+  myStage: ${opt:stage, self:provider.stage}
+  pythonRequirements:
+    dockerizePip: non-linux
+    slim: true
+    strip: false
+    layer:
+      name: ${self:service}-${self:custom.myStage}-Python37
+      description: Packages needed for Serving Survey Links
+      compatibleRuntimes:
+        - python3.7
+
+package:
+  exclude:
+  - .env

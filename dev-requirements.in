@@ -1,0 +1,10 @@
+# dev-requirements.in
+# Instructions for updating packages to install
+## 1. [First time] manually install pip-tools (pip install pip-tools)
+## 2. Add package needed to requirements.in
+## 3. Run pip-compile dev-requirements.in to update dev-requirements.txt
+## 4. Run pip-sync dev-requirements.txt to sync virtualenv installed packages
+-r src/package_layer/requirements.txt
+pip-tools
+pylint
+black

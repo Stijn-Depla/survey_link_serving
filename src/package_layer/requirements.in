@@ -1,0 +1,7 @@
+# requirements.in
+# Instructions for updating packages to install
+## 1. [First time] manually install pip-tools (pip install pip-tools)
+## 2. Add package needed to requirements.in
+## 3. Run pip-compile requirements.in to update requirements.txt
+castorapi
+python-dotenv
