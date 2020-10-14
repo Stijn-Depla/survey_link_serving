@@ -22,15 +22,20 @@ def call(event, context):
     print(event)
     i_method = event["httpMethod"]
     if i_method == "GET":
-        dict_event_action = json.loads(event['body'])['action']
-        t_result = pipeline_serve_link(dict_event_action)
+        dict_event = json.loads(event)
+        print(dict_event)
+        t_result = pipeline_serve_link()
         print("Status_code returned by pipeline_serve_link: " + str(t_result[0]))
         print("Message returned by pipeline_serve_link: " + t_result[1])
         print("Link returned by pipeline_serve_link: " + str(t_result[2]))
         if t_result[2] is not None:
             return {
                 "statusCode": t_result[0],
-                "headers": {"link": str(t_result[2])},
+                "headers": {
+                    "link": str(t_result[2]),
+                    "Access-Control-Allow-Methods": "Get",
+                    "Access-Control-Allow-Origin": "https://uitkomstgerichtegeboortezorg.nl"
+                },
                 "isBase64Encoded": False,
             }
         return {
@@ -42,6 +47,6 @@ def call(event, context):
     return {
         "statusCode": 400,
         "headers": {},
-        "body": "API hanldes GET requests only",
+        "body": "API handles GET requests only",
         "isBase64Encoded": False,
     }
