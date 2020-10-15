@@ -7,7 +7,7 @@ provider:
   region: eu-central-1
   stage: dev
   deploymentBucket:
-    name: recipes.stijn.depla.deployments.1281317153023527
+    name: survey.link.seving.alies.deployments
     blockPublicAcces: true
     maxPreviousDeploymentArtifacts: 10
     serverSideEncryption: AES256
