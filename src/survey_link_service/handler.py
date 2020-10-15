@@ -53,10 +53,11 @@ def call(event, context):
             "body": "This service is not meant for you",
             "isBase64Encoded": False,
         }
-    except:
+    except Exception as e:
+        print(e)
         return {
             "statusCode": 500,
             "headers": {},
-            "body": "Service had an internal error",
+            "body": "Service had an internal error: " + str(e),
             "isBase64Encoded": False,
         }
