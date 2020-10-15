@@ -1,7 +1,6 @@
 """
 Handler wrapping pipeline in a Lambda friendly function
 """
-from dotenv import load_dotenv
 from os import environ
 
 try:
@@ -22,7 +21,6 @@ def call(event, context):
     """
     print(event)
     try:
-        load_dotenv('./.env')
         i_trusted_origin = environ['TRUSTED_ORIGIN']
         i_method = event["httpMethod"]
         i_origin = event['headers']['origin']

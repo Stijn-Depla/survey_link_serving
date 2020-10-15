@@ -12,7 +12,6 @@ numpy==1.19.2             # via pandas
 pandas==1.1.3             # via castorapi
 progressbar2==3.53.1      # via castorapi
 python-dateutil==2.8.1    # via pandas
-python-dotenv==0.14.0
 python-utils==2.4.0       # via progressbar2
 pytz==2020.1              # via pandas
 requests==2.24.0          # via castorapi

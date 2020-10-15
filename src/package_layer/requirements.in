@@ -4,4 +4,3 @@
 ## 2. Add package needed to requirements.in
 ## 3. Run pip-compile requirements.in to update requirements.txt
 castorapi
-python-dotenv
