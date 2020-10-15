@@ -9,4 +9,4 @@ from os import environ
 
 
 def pipeline_serve_link() -> Tuple[int, str, str]:
-    return 401, "Dummy version", "www.success.com"
+    return 200, "Dummy version", "https://www.success.com/"
