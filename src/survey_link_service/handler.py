@@ -1,6 +1,8 @@
 """
 Handler wrapping pipeline in a Lambda friendly function
 """
+from dotenv import load_dotenv
+from os import environ
 
 try:
     from pipeline import pipeline_serve_link
@@ -20,9 +22,11 @@ def call(event, context):
     """
     print(event)
     try:
+        load_dotenv('./.env')
+        i_trusted_origin = environ['TRUSTED_ORIGIN']
         i_method = event["httpMethod"]
         i_origin = event['origin'][0]
-        if i_method == "GET" and i_origin == "https://uitkomstgerichtegeboortezorg.nl":
+        if i_method == "GET" and i_origin == i_trusted_origin:
             t_result = pipeline_serve_link()
             print("Status_code returned by pipeline_serve_link: " + str(t_result[0]))
             print("Message returned by pipeline_serve_link: " + t_result[1])

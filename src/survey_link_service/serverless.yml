@@ -33,6 +33,7 @@ functions:
       STUDY_ID: ${env:STUDY_ID}
       INSTITUTE_ID: ${env:INSTITUTE_ID}
       SURVEY_PACKAGE_ID: ${env:SURVEY_PACKAGE_ID}
+      TRUSTED_ORIGIN: ${env:TRUSTED_ORIGIN}
     events:
       - http:
           path: /
