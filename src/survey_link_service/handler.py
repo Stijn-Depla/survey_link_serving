@@ -1,7 +1,6 @@
 """
 Handler wrapping pipeline in a Lambda friendly function
 """
-import json
 
 try:
     from pipeline import pipeline_serve_link
@@ -20,33 +19,40 @@ def call(event, context):
 
     """
     print(event)
-    i_method = event["httpMethod"]
-    if i_method == "GET":
-        dict_event = json.loads(event)
-        print(dict_event)
-        t_result = pipeline_serve_link()
-        print("Status_code returned by pipeline_serve_link: " + str(t_result[0]))
-        print("Message returned by pipeline_serve_link: " + t_result[1])
-        print("Link returned by pipeline_serve_link: " + t_result[2])
-        if t_result[2] is not None:
+    try:
+        i_method = event["httpMethod"]
+        i_origin = event['origin'][0]
+        if i_method == "GET" and i_origin == "https://uitkomstgerichtegeboortezorg.nl":
+            t_result = pipeline_serve_link()
+            print("Status_code returned by pipeline_serve_link: " + str(t_result[0]))
+            print("Message returned by pipeline_serve_link: " + t_result[1])
+            print("Link returned by pipeline_serve_link: " + t_result[2])
+            if t_result[2] is not None:
+                return {
+                    "statusCode": t_result[0],
+                    "headers": {
+                        "link": t_result[2],
+                        "Access-Control-Allow-Methods": "Get",
+                        "Access-Control-Allow-Origin": "https://uitkomstgerichtegeboortezorg.nl"
+                    },
+                    "isBase64Encoded": False,
+                }
             return {
                 "statusCode": t_result[0],
-                "headers": {
-                    "link": t_result[2],
-                    "Access-Control-Allow-Methods": "Get",
-                    "Access-Control-Allow-Origin": "https://uitkomstgerichtegeboortezorg.nl"
-                },
+                "headers": {},
+                "body": t_result[1],
                 "isBase64Encoded": False,
             }
         return {
-            "statusCode": t_result[0],
+            "statusCode": 400,
             "headers": {},
-            "body": t_result[1],
+            "body": "This service is not meant for you",
             "isBase64Encoded": False,
         }
-    return {
-        "statusCode": 400,
-        "headers": {},
-        "body": "API handles GET requests only",
-        "isBase64Encoded": False,
-    }
+    except:
+        return {
+            "statusCode": 500,
+            "headers": {},
+            "body": "Service had an internal error",
+            "isBase64Encoded": False,
+        }
