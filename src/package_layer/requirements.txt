@@ -4,16 +4,8 @@
 #
 #    pip-compile src/package_layer/requirements.in
 #
-castorapi==0.2
 certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
 idna==2.10                # via requests
-numpy==1.19.2             # via pandas
-pandas==1.1.3             # via castorapi
-progressbar2==3.53.1      # via castorapi
-python-dateutil==2.8.1    # via pandas
-python-utils==2.4.0       # via progressbar2
-pytz==2020.1              # via pandas
-requests==2.24.0          # via castorapi
-six==1.15.0               # via progressbar2, python-dateutil, python-utils
+requests==2.24.0
 urllib3==1.25.10          # via requests
